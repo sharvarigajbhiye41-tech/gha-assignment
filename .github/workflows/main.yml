@@ -17,8 +17,8 @@ on:
              -patch
              -minor
              -major
- jobs: 
-    prepare:
+jobs: 
+  prepare:
       runs-on: ubuntu-latest
       outputs:
        build_tag: ${{ steps.tag.outputs.build_tag}}
