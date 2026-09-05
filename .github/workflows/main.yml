@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
   inputs:
        version:
-           description: "version number"
-       type: string
-       required: true
-      default: "1.0.0"
-        release_type:
+          description: "version number"
+          type: string
+          required: true
+          default: "1.0.0"
+          release_type:
           description: "Type of version"
           type: choice
           required: true
