@@ -1,8 +1,7 @@
 name: Q1 Release Note
-
 on:
   workflow_dispatch:
-  inputs:
+    inputs:
        version:
           description: "version number"
           type: string
