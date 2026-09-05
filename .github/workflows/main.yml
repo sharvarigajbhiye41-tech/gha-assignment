@@ -7,10 +7,9 @@ on:
           type: string
           required: true
           default: "1.0.0"
-          release_type:
+        release_type:
           description: "Type of version"
           type: choice
-          required: true
           default: patch
           options:
              -patch
@@ -20,9 +19,9 @@ jobs:
   prepare:
       runs-on: ubuntu-latest
       outputs:
-       build_tag: ${{ steps.tag.outputs.build_tag}}
-       build_date: ${{ steps.date.outputs.build_date}}
-    steps:
+        build_tag: ${{ steps.tag.outputs.build_tag}}
+        build_date: ${{ steps.date.outputs.build_date}}
+      steps:
         -id: tag
         name: Compute build tag 
         run: |
@@ -31,21 +30,22 @@ jobs:
         -id: date
         name: Compute build date
         run: echo "build_date=$(date +%F)" >> "$GITHUB_OUTPUT"
+        
 announce:
     needs: prepare
     runs-on: ubuntu_latest
-steps:
-    -name: Prints outputs
-    run: |
+    steps:
+     -name: Prints outputs
+     run: |
        echo "Build tag: ${{ needs.prepare.outputs.build_tag}}"
        echo "Build date: ${{needs.prepare.outputs.build_date}}"
 
-       -name: Write summary
-       run: |
-        {
-         echo "|field|Value|"
-         echo"|---|---|"
-         echo"|Version|${{inputs.version}}|"
-         echo"release type |${{ inputs.release_type}}|"
-         echo"|Build tag| ${{needs.prepare.outputs.build_tag}}|"
-         echo "|Build date|${{ needs.prepare.outputs.build_date }}|"} >> "$GITHUB_STEP_SUMMARY"
+    -name: Write summary
+    run: |
+      {
+        echo "|field|Value|"
+        echo"|---|---|"
+        echo"|Version|${{inputs.version}}|"
+        echo"release type |${{ inputs.release_type}}|"
+        echo"|Build tag| ${{needs.prepare.outputs.build_tag}}|"
+        echo "|Build date|${{ needs.prepare.outputs.build_date }}|"} >> "$GITHUB_STEP_SUMMARY"
