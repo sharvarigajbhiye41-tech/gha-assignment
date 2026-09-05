@@ -26,7 +26,7 @@ jobs:
     steps:
         -id: tag
         name: Compute build tag 
-        run:
+        run: |
            TAG:"v${{ inputs.version }}-${{ inputs.release_type }}-${{ github.run_number }}"
            echo "build_tag=$TAG" >> "$GITHUB_OUTPUT"
         -id: date
@@ -47,6 +47,6 @@ steps:
          echo "|field|Value|"
          echo"|---|---|"
          echo"|Version|${{inputs.version}}|"
-         echo"release type |$ {{ inputs.release_type}}|"
+         echo"release type |${{ inputs.release_type}}|"
          echo"|Build tag| ${{needs.prepare.outputs.build_tag}}|"
          echo "|Build date|${{ needs.prepare.outputs.build_date }}|"} >> "$GITHUB_STEP_SUMMARY"
