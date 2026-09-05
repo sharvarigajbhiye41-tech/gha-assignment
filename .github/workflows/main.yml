@@ -1,0 +1,36 @@
+name: Q1 Release Note
+on:
+  workflow_dispatch:
+     inputs:
+       version:
+           description:"version number"
+       type: string
+       required: true
+      default: "1.0.0"
+        release_type:
+          description: "Type of version"
+          type: choice
+          default: patch
+          options:
+             -patch
+             -minor
+             -major
+ jobs: 
+    prepare:
+      runs-on: ubuntu-latest
+      outputs:
+       build_tag: ${{ steps.tag.outputs.build_tag}}
+       build_date: ${{ steps.tag.outputs.build_date}}
+    steps:
+        -id: tag
+        name: Compute build tag 
+        run:
+           TAG:"v${{input.version }}-${{input.release_type}}-${{ github.run_numbers }}"
+           echo "build_tag+$TAG" >> "GITHUB_OUTPUT"
+        -id: date
+        name: Compute build date
+        run: echo "build_date=$(date +%F)" >> "$GITHUB_OUTPUT
+announce:
+  runs-on: ubuntu_atest
+  steps:
+  -name: Prints output
